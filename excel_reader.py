@@ -5,9 +5,9 @@ def get_data(file_name, min_row, max_row):
     """
     функция принимает имя файла, номера строк которые нужно обработать,
     и возвращает список
-    :param file_name:
-    :param min_row:
-    :param max_row:
+    :param file_name: ередается имя файла (с расширением) для прочтения
+    :param min_row: строка с которой начинается чтение
+    :param max_row: строка на которой чтение файла заканчивается
     :return:
     """
     data_list = []
