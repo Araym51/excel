@@ -22,11 +22,8 @@ def get_data(file_name, min_row, max_row):
 
 
 # задаем имя файлов в качвычках и нужные нам строки min_row и max_row
-source_list = get_data('source.xlsx', 374, 427)  # исходный файл 374, 427
-print(source_list)
-
+source_list = get_data('source.xlsx', 5, 25)
 document = Document()
-
 table_2 = document.add_table(rows=1, cols=3)
 
 for pc_name, hdd_number, hdd_serial, pc_number in source_list:
@@ -36,15 +33,23 @@ for pc_name, hdd_number, hdd_serial, pc_number in source_list:
    row_cells_2 = table_2.add_row().cells
    row_cells_2[0].text = str('Системный блок')
    row_cells_2[1].text = str('-')
-   row_cells_2[2].text = str(f'{pc_number}')
+   if pc_number is None:
+      row_cells_2[2].text = str(f'-')
+   else:
+      row_cells_2[2].text = str(f'{pc_number}')
    row_cells_2 = table_2.add_row().cells
-   row_cells_2[0].text = str(hdd_number)
+   if hdd_number is None:
+      row_cells_2[0].text = str('-')
+   else:
+      row_cells_2[0].text = str(f'ЖМД № {hdd_number}')
    row_cells_2[1].text = str('-')
-   row_cells_2[2].text = str(hdd_serial)
+   if hdd_serial is None:
+      row_cells_2[2].text = str('-')
+   else:
+      row_cells_2[2].text = str(hdd_serial)
    row_cells_2 = table_2.add_row().cells
    row_cells_2[0].merge(row_cells_2[-1])
-   row_cells_2[0].text = f'Переферийное оборудование: монитор, клавиатура, манипулятор мышь, принтер,акустические колонки, web-камера '
+   row_cells_2[0].text = f'Периферийное оборудование: монитор, клавиатура, манипулятор мышь, принтер,акустические колонки, web-камера '
 
 
 document.save('check.docx')
-
