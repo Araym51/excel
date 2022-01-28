@@ -40,12 +40,10 @@ def joiner(array):
 
 
 active_users = get_data('active2.xlsx', 1, 421) # 7717-SD,  3815-active
-# print(active_users)
 active_users = joiner(active_users)
-# print(active_users)
 
 fired_users = get_data('fired.xlsx', 2, 3722) # 3722
-# print(fired_users)
+
 # сравниваем списки
 counter = 0
 delete_list = []
