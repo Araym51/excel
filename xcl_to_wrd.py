@@ -1,28 +1,28 @@
-import openpyxl as op
 from docx import Document
+import openpyxl as op
 
 
 def get_data(file_name, min_row, max_row):
     """
-   функция принимает имя файла, номера строк которые нужно обработать,
-   и возвращает список
-   :param file_name: передается имя файла (с расширением) для прочтения
-   :param min_row: строка с которой начинается чтение
-   :param max_row: строка на которой чтение файла заканчивается
-   :return:
-   """
+    функция принимает имя файла, номера строк которые нужно обработать,
+    и возвращает список
+    :param file_name: ередается имя файла (с расширением) для прочтения
+    :param min_row: строка с которой начинается чтение
+    :param max_row: строка на которой чтение файла заканчивается
+    :return:
+    """
     data_list = []
     sheets = op.load_workbook(filename=file_name).active
-    for rows in sheets.iter_rows(min_row=min_row, max_row=max_row, min_col=2, max_col=5):
+    for rows in sheets.iter_rows(min_row=min_row, max_row=max_row, min_col=0, max_col=9):
         x = []
-        for cells in rows:
-            x.append(cells.value)
+        for cell in rows:
+            x.append(cell.value)
         data_list.append(x)
     return data_list
 
 
 # задаем имя файлов в качвычках и нужные нам строки min_row и max_row
-source_list = get_data('all.xlsx', 5, 25)
+source_list = get_data('source.xlsx', 2124, 2125)
 document = Document()
 n = 0
 
@@ -67,4 +67,4 @@ for pc_name, hdd_number, hdd_serial, pc_number in source_list:
     b = table.cell(3, 0)
     table = a.merge(b)
 
-document.save('check.docx')
+document.save('ЦВСНП.docx')

@@ -59,3 +59,7 @@ for items in compare_list:
 
 book.save('result.xlsx')
 book.close()
+
+
+if __name__ == "__main__":
+    pass
