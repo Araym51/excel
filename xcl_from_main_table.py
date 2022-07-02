@@ -77,7 +77,7 @@ def table_writer(source, os, name):
             print('ОС не указана')
             exit(0)
 
-source_list = get_data('all.xlsx', 123, 203)
+source_list = get_data('all.xlsx', 2356, 2392)
 with_linux = []
 with_windows = []
 
@@ -88,5 +88,5 @@ for item in source_list:
         else:
             with_windows.append(item)
 
-table_writer(with_linux, 'lin', 'АЛЕКСАНДРОВСК')
-table_writer(with_windows, 'win', 'АЛЕКСАНДРОВСК')
+table_writer(with_linux, 'lin', 'ЦИТСиЗИ')
+table_writer(with_windows, 'win', 'ЦИТСиЗИ')
