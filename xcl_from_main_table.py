@@ -1,5 +1,6 @@
 # pip install openpyxl
 import openpyxl as op
+# pip install docx
 from docx import Document
 
 def get_data(file_name, min_row, max_row):
