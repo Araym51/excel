@@ -12,7 +12,7 @@ def get_data(file_name, min_row, max_row):
     """
     data_list = []
     sheets = op.load_workbook(filename=file_name).active
-    for rows in sheets.iter_rows(min_row=min_row, max_row=max_row, min_col=0, max_col=10):
+    for rows in sheets.iter_rows(min_row=min_row, max_row=max_row, min_col=0, max_col=7):
         x = []
         for cell in rows:
             x.append(cell.value)
@@ -20,16 +20,36 @@ def get_data(file_name, min_row, max_row):
     return data_list
 
 
-# задаем имя файлов в качвычках и нужные нам строки min_row и max_row
-source_list = get_data('all.xlsx', 2415, 2498)
-compare_list = get_data('LOVDT.xlsx', 2, 78)
+def joiner(array):
+    """
+    принимает списпок, объединяет в строку элементы списка, удаляет
+    объединенные в строку элементы, вставляет новое значение за место удаленных
+    :param array: список
+    :return: список с объединенными элементами списка
+    """
+    n = 0
+    for i in array:
+        if i[2] is None: # если колонка пустая - её не обрабатывать.
+            x = i[1] + ' ' + i[3]
+        else:
+            x = i[3] + ' ' + i[1] + ' ' + i[2]
+        del array[n][1:4]
+        array[n].insert(1, x)
+        n += 1
+    return array
+
+
+active_users = get_data('active2.xlsx', 1, 421) # 7717-SD,  3815-active
+active_users = joiner(active_users)
+
+fired_users = get_data('fired.xlsx', 2, 3722) # 3722
 
 # сравниваем списки
 counter = 0
 delete_list = []
-for i in compare_list:
-    for j in source_list:
-        if i[5] == j[5]:
+for i in active_users:
+    for j in fired_users:
+        if i[1] == j[1]:
             delete_list.append(counter)
     counter += 1
 
@@ -44,22 +64,22 @@ final_delete_list.reverse()
 
 # удаляем повторяющиеся элементы
 for deleter in final_delete_list:
-    compare_list.pop(deleter)
+    active_users.pop(deleter)
+
+print(final_delete_list)
 
 # пишем результат в excel файл
 book = op.Workbook()
 sheet = book.active
 row = 1
-for items in compare_list:
+for items in active_users:
     column = 1
-    while column < len(items):
-        sheet.cell(row=row, column=column).value = items[column]
+    data_cell_num = 0
+    while column <= len(items):
+        sheet.cell(row=row, column=column).value = items[data_cell_num]
         column += 1
+        data_cell_num += 1
     row += 1
-
-book.save('result_with_blckd.xlsx')
+print(len(final_delete_list))
+book.save('result_without_blckd-2.xlsx')
 book.close()
-
-
-if __name__ == "__main__":
-    pass
